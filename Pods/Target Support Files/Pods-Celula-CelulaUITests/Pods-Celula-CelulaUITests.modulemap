@@ -1,0 +1,6 @@
+framework module Pods_Celula_CelulaUITests {
+  umbrella header "Pods-Celula-CelulaUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

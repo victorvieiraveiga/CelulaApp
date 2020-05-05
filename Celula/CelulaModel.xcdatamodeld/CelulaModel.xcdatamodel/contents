@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CelulaDB" representedClassName="CelulaDB" syncable="YES" codeGenerationType="class">
+        <attribute name="anfitriao" optional="YES" attributeType="String"/>
+        <attribute name="bairro" optional="YES" attributeType="String"/>
+        <attribute name="cep" optional="YES" attributeType="String"/>
+        <attribute name="dia" optional="YES" attributeType="String"/>
+        <attribute name="horario" optional="YES" attributeType="String"/>
+        <attribute name="lider" optional="YES" attributeType="String"/>
+        <attribute name="logradouro" optional="YES" attributeType="String"/>
+        <attribute name="municipio" optional="YES" attributeType="String"/>
+        <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="numero" optional="YES" attributeType="String"/>
+        <attribute name="uf" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ParticipantesDB" representedClassName="ParticipantesDB" syncable="YES" codeGenerationType="class">
+        <attribute name="data_nascimento" optional="YES" attributeType="String"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="foto" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="nome_celula" optional="YES" attributeType="String"/>
+        <attribute name="telefone" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ParticipantesReuniaoCelulaDB" representedClassName="ParticipantesReuniaoCelulaDB" syncable="YES" codeGenerationType="class">
+        <attribute name="idReuniao" optional="YES" attributeType="String"/>
+        <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="nomeCelula" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ReuniaoCelulaDB" representedClassName="ReuniaoCelulaDB" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="nomeCelula" optional="YES" attributeType="String"/>
+        <attribute name="observacao" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="CelulaDB" positionX="-226.890625" positionY="-79.921875" width="128" height="208"/>
+        <element name="ParticipantesDB" positionX="-56.59375" positionY="-77.21875" width="128" height="133"/>
+        <element name="ParticipantesReuniaoCelulaDB" positionX="-126" positionY="18" width="128" height="88"/>
+        <element name="ReuniaoCelulaDB" positionX="-144" positionY="9" width="128" height="103"/>
+    </elements>
+</model>
