@@ -46,25 +46,25 @@
             filePath = "Celula/Celula/Controller/CadastroCelulaViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
-            landmarkName = "CadastroCelulaViewController"
-            landmarkType = "3">
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "validaCadastro()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F865643A-285F-4323-9A15-9FC5AD12024A"
+            uuid = "A332FEB6-F8FE-450C-8C8A-0A9801244A2C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Celula/Celula/View/FormataCelula.swift"
+            filePath = "Celula/Celula/Controller/CadastroCelulaViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "verificaCelulaExiste(_:)"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "addCelula()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

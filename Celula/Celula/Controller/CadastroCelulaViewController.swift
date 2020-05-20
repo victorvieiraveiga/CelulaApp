@@ -26,6 +26,8 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var textNumero: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var activitIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     let pickerViewDia: UIPickerView = UIPickerView()
     let dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado", "Domingo"]
     
@@ -45,6 +47,16 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     @objc func aumentarScroll (notification: Notification) {
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.scrollView.frame.height + 320)
     }
+    
+    @IBAction func ActivitIndicator(_ sender: UITextField) {
+        activitIndicator.center = self.textCep.center
+        activitIndicator.hidesWhenStopped = true
+        textCep.addSubview(activitIndicator)
+        activitIndicator.startAnimating()
+        //UIApplication.shared.beginIgnoringInteractionEvents()
+  
+    }
+    
     
     
     @IBAction func adicionarCelula(_ sender: Any) {
@@ -75,10 +87,6 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
-    }
-    
-    @IBAction func voltarButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -138,6 +146,7 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
             
             do {
                 try context?.save()
+                print ("Celula incluida com sucesso.")
                 //vai para telas de favoritos
                 TelaPrincipal()
                } catch  {
@@ -169,6 +178,7 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
             print (error)
         }
         
+       activitIndicator.stopAnimating()
     }
     
     
@@ -188,12 +198,22 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         textDia.text = self.dias[row]
     }
+    
 
+    @IBAction func entraFocoDia(_ sender: Any) {
+        self.textDia.text = "Segunda"
+    }
+    
+  
     
     @IBAction func entraFocoHorario(_ sender: UITextField) {
         
+        self.textHorario.text = getCurrentShortDate()
+        
        let datePickerHorario : UIDatePicker = UIDatePicker()
         datePickerHorario.datePickerMode = .time
+        datePickerHorario.locale = Locale(identifier: "br")
+    
         sender.inputView = datePickerHorario
         datePickerHorario.addTarget(self, action: #selector(exibeData(sender:)), for: .valueChanged)
         
@@ -201,9 +221,20 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @objc func exibeData (sender: UIDatePicker) {
         let formatador = DateFormatter()
-        formatador.dateFormat = "hh:ss"
+        formatador.dateFormat = "HH:mm"
+        formatador.timeZone = .current
+        formatador.locale = .current
         self.textHorario.text = formatador.string(from: sender.date)
     }
+    
+    func getCurrentShortDate() -> String {
+        let todaysDate = Date()
+        let dateFormatter = DateFormatter()
+         dateFormatter.dateFormat = "HH:mm"
+        let DateInFormat = dateFormatter.string(from: todaysDate)
+
+         return DateInFormat
+     }
     
     func exibeMensagemAlerta (titulo: String, mensagem:String){
         let myAlert = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)

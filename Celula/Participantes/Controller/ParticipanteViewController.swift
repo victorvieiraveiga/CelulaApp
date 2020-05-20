@@ -112,9 +112,8 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
               
           }
       }
-    
-    
-    @IBAction func EntraFocoDataNascimento(_ sender: UITextField) {
+        
+    @IBAction func FocoDataNascimento(_ sender: UITextField) {
         let datePickerHorario : UIDatePicker = UIDatePicker()
         //Configura DatePicker
         let config = configuracao()
@@ -138,12 +137,12 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
            var valida : Bool = true
            
                     if textNome.text!.isEmpty {
-                        exibeMensagemAlerta (titulo: "Dado Invalido.", mensagem: "Preencha o Nome da Celula.")
+                        exibeMensagemAlerta (titulo: "Dado Invalido.", mensagem: "Preencha o Nome do Participante.")
                         valida = false
                     }
                     
                     if textDataNascimento.text!.isEmpty {
-                         exibeMensagemAlerta (titulo: "Dado Invalido.", mensagem: "Preencha o Nome do Lider.")
+                         exibeMensagemAlerta (titulo: "Dado Invalido.", mensagem: "Preencha a Data de Nascimento.")
                          valida = false
                      }
 

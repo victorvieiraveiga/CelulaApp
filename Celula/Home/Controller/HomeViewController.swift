@@ -20,6 +20,11 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var viewPrincipal: UIView!
     @IBOutlet weak var viewSemCelula: UIView!
     
+    @IBOutlet weak var labelUltimasReunioes: UILabel!
+    @IBOutlet weak var labelReuniaoRealizadas: UILabel!
+    @IBOutlet weak var labelContadorReunioes: UILabel!
+    
+    
     var reuniaoList : [NSManagedObject] = []
     var participantesReuniao : [NSManagedObject] = []
     var celulaList : [NSManagedObject] = []
@@ -41,18 +46,17 @@ class HomeViewController: UIViewController {
 
 
         collectionReuniao.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        //collectionCelula.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        collectionCelula.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
         
-//        if let flowLayoutA = collectionCelula.collectionViewLayout as? UICollectionViewFlowLayout {
-//               flowLayoutA.scrollDirection = .horizontal
-//           }
+        if let flowLayoutA = collectionCelula.collectionViewLayout as? UICollectionViewFlowLayout {
+               flowLayoutA.scrollDirection = .horizontal
+          }
          if let flowLayoutB = collectionReuniao.collectionViewLayout as? UICollectionViewFlowLayout {
                      flowLayoutB.scrollDirection = .horizontal
            }
-//
-
-   //     collectionCelula.reloadData()
-    //    collectionReuniao.reloadData()
+        
+        exibeLabelsReuniao()
+  
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,8 +66,25 @@ class HomeViewController: UIViewController {
         contadorReuniao.text = String(reuniaoObject.numeroReunioes())
         collectionCelula.reloadData()
         collectionReuniao.reloadData()
+        
+        exibeLabelsReuniao()
+        
 
     }
+    
+    func exibeLabelsReuniao () {
+        if self.reuniaoList.count > 0 {
+            labelUltimasReunioes.isHidden = false
+            labelReuniaoRealizadas.isHidden = false
+            labelContadorReunioes.isHidden = false
+        }else {
+            labelUltimasReunioes.isHidden = true
+            labelReuniaoRealizadas.isHidden = true
+            labelContadorReunioes.isHidden = true
+        }
+    }
+    
+    
     
     func inicio () {
         if celulaObject.existeCelula() == true {

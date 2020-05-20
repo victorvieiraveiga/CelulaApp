@@ -92,8 +92,6 @@ class ReuniaoCadastroViewController: UIViewController, UITextViewDelegate {
                sender.inputView =  config.configuraDatePicker(datePickerHorario)
                datePickerHorario.addTarget(self, action: #selector(exibeData(sender:)), for: .valueChanged)
     }
-    
-    
     @objc func exibeData (sender: UIDatePicker) {
            let formatador = DateFormatter()
            formatador.dateFormat = "dd/MM/yyyy"
