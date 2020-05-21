@@ -28,7 +28,15 @@ class FormataCelula {
         
         return celula
     }
-    
+    func numeroCelula () -> Int{
+          
+          var nrCelula : Int = 0
+          let celulaList = CarregaCelula()
+          nrCelula = celulaList.count
+
+          return nrCelula
+          
+      }
     
     func existeCelula () -> Bool {
         var temCelula : Bool = false
@@ -59,7 +67,8 @@ class FormataCelula {
        
         
         for cel in celula {
-            guard let nome = cel.value(forKey: "nome")  else {return false}
+            var nome : String = ""
+            nome = cel.value(forKey: "nome") as! String
                        
             if nome != nil{
             

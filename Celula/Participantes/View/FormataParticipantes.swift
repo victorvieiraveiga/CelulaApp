@@ -26,6 +26,7 @@ class FormataParticipantes {
     }
     
     
+    
     func CarregaParticipante () -> [NSManagedObject]{
         var participantes : [NSManagedObject] = []
           let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -39,6 +40,15 @@ class FormataParticipantes {
           }
         return participantes
      }
+    
+    func numeroParticipante () -> Int{
+          
+          var nrParticipante : Int = 0
+          let participanteList = CarregaParticipante()
+          nrParticipante = participanteList.count
+          return nrParticipante
+          
+      }
     
     func CarregaParticipantesReuniao (idReuniao: String? = nil, nomeCelula: String) -> [NSManagedObject] {
         //Mark - Cria conexão com CoreData

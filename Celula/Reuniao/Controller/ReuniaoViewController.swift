@@ -144,7 +144,7 @@ class ReuniaoViewController: UIViewController , UITableViewDataSource, UITableVi
             guard let celulaNome = self.reuniaoList[indice].value(forKey: "nomeCelula") else {return}
             
         
-            participantes = partReuniaoObject.CarregaParticipantesReuniao(idReuniao: idReuniao as! String, nomeCelula: "")
+        participantes = partReuniaoObject.CarregaParticipantesReuniao(idReuniao: idReuniao as? String, nomeCelula: "")
             participantesString = formata.DesenbrulhaParticipantes(participantes)
             
             let atribute1 = NSMutableAttributedString(string: celulaNome as! String)

@@ -226,11 +226,11 @@ extension ReuniaoCadastroViewController : UIPickerViewDelegate, UIPickerViewData
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let row = self.celula[row].value(forKey: "nome")
-        return row as! String
+        return row as? String
      }
 
      func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        textNomeCelula.text = self.celula[row].value(forKey: "nome") as! String
+        textNomeCelula.text = self.celula[row].value(forKey: "nome") as? String
      }
 
 

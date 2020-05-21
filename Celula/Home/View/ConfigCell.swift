@@ -13,7 +13,7 @@ class ConfigCell: UICollectionViewCell {
     
     @IBOutlet weak var labelData: UILabel!
     @IBOutlet weak var labelParticipantes: UILabel!
-    @IBOutlet weak var labelObs: UILabel!
+
     
     
    
@@ -21,7 +21,7 @@ class ConfigCell: UICollectionViewCell {
     func configuraReuniao (reuniao: NSManagedObject , participantes: [NSManagedObject]) {
         
         guard let date =  reuniao.value(forKey: "data") else {return}
-        guard let obs = reuniao.value(forKey: "observacao") else {return}
+        //guard let obs = reuniao.value(forKey: "observacao") else {return}
         //converte data para string
         let dateFormatter = DateFormatter ()
         dateFormatter.locale = Locale(identifier: "pt_br")
