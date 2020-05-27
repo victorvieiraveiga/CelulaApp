@@ -44,6 +44,18 @@ class CelulaViewController: UIViewController, UITableViewDataSource,UITableViewD
         return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+           let celula =    self.celula[indexPath.item]
+             
+             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+             let controller = storyboard.instantiateViewController(identifier: "cadCelula") as! CadastroCelulaViewController
+             
+             controller.celulaSelecionada = [celula]
+             //self.present(controller, animated: true, completion: nil)
+             self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let celulaItem = self.celula[indexPath.row]
         

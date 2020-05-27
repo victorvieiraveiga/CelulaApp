@@ -24,7 +24,7 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
     @IBOutlet weak var textDataNascimento: UITextField!
     
     let imagePicker = ImagePicker()
-    
+    var participanteSelecionado : [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +33,8 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
         CriaTollBar()
         
         NotificationCenter.default.addObserver(self, selector: #selector(aumentarScroll), name: UIResponder.keyboardWillShowNotification, object: nil)
+       
+        PreencheCamposAlteracaoParticipante()
         
    }
     
@@ -78,7 +80,34 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
     
     
     @IBAction func adicionaParticipante(_ sender: Any) {
-        addParticipante()
+        
+        if participanteSelecionado.count > 0 {
+            alteraParticipante()
+        }
+        else {
+            addParticipante()
+            
+        }
+    }
+    
+    
+    func PreencheCamposAlteracaoParticipante () {
+        if participanteSelecionado.count > 0 {
+
+            guard let nome = participanteSelecionado[0].value(forKey: "nome") else {return}
+            guard let telefone = participanteSelecionado[0].value(forKey: "telefone") else {return}
+            guard let email = participanteSelecionado[0].value(forKey: "email") else {return}
+            guard let dataNascimento = participanteSelecionado[0].value(forKey: "data_nascimento") else {return}
+            guard let foto = participanteSelecionado[0].value(forKey: "foto") else {return}
+           
+            
+            textNome.text = nome as? String
+            textTelefone.text = telefone as? String
+            textEmail.text = email as? String
+            textDataNascimento.text = dataNascimento as? String
+            ImageParticipante.image = UIImage(data: foto as! Data)
+            
+        }
     }
     
     func addParticipante () {
@@ -91,8 +120,8 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
               
               guard let nome = textNome.text else {return}
               guard let dataNascimento = textDataNascimento.text else {return}
-              guard let telefone = textDataNascimento.text else {return}
-              guard let email = textDataNascimento.text else {return}
+              guard let telefone = textTelefone.text else {return}
+              guard let email = textEmail.text else {return}
               
               let data = self.ImageParticipante.image?.pngData() as NSData?
               
@@ -112,6 +141,40 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
               
           }
       }
+    
+    func alteraParticipante () {
+           let appDelegate = UIApplication.shared.delegate as? AppDelegate
+           //let context = appDelegate?.persistentContainer.viewContext
+           let context = appDelegate!.persistentContainer.viewContext
+           let entitidec = NSEntityDescription.entity(forEntityName: "ParticipantesDB", in: context)
+           let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ParticipantesDB")
+           request.entity = entitidec
+           let pred = NSPredicate(format: "nome =%@", textNome.text!)
+           request.predicate = pred
+           
+           do {
+               let result =  try context.fetch(request)
+               if result.count > 0 {
+                    let manage = result[0] as! NSManagedObject
+
+                    manage.setValue(textNome.text, forKey: "nome")
+                    manage.setValue(textTelefone.text, forKey: "telefone")
+                    manage.setValue(textDataNascimento.text, forKey: "data_nascimento")
+                    manage.setValue(textEmail.text,forKey: "email")
+
+                    let data = self.ImageParticipante.image?.pngData() as NSData?
+                    manage.setValue(data, forKey: "foto")
+
+                    try context.save()
+                    TelaPrincipal()
+               }
+           } catch  let erro1 as NSError{
+               print (erro1)
+           }
+           catch  {
+                   print ("Erro")
+           }
+       }
         
     @IBAction func FocoDataNascimento(_ sender: UITextField) {
         let datePickerHorario : UIDatePicker = UIDatePicker()
@@ -186,6 +249,7 @@ class ParticipanteViewController: UIViewController, ImagePickerFotoSelecionada {
         self.textNome.inputAccessoryView = doneToolbar
         self.textEmail.inputAccessoryView = doneToolbar
         self.textDataNascimento.inputAccessoryView = doneToolbar
+        
            
        }
 

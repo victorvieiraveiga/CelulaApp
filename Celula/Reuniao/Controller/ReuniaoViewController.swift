@@ -148,8 +148,12 @@ class ReuniaoViewController: UIViewController , UITableViewDataSource, UITableVi
             participantesString = formata.DesenbrulhaParticipantes(participantes)
             
             let atribute1 = NSMutableAttributedString(string: celulaNome as! String)
-            atribute1.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: 8))
-            atribute1.addAttribute(.font, value: UIFont.fontNames(forFamilyName:"Avenir Black"), range: NSRange(location: 0, length: 8))
+        
+            let nomeCelula : String = celulaNome as! String
+        
+        
+            atribute1.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: nomeCelula.count))
+            atribute1.addAttribute(.font, value: UIFont.fontNames(forFamilyName:"Avenir Black"), range: NSRange(location: 0, length: nomeCelula.count))
             
             let conteudo = "<p> <font face='Avenir'> <h3>\(celulaNome) </h3> <b> Data: </b> \(dataString) <br/>  <b>Participantes: </b> \(participantesString) <br/> <b> Observação: </b> \(obs) </p>"
             

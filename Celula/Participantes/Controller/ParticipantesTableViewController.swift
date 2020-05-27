@@ -72,4 +72,16 @@ class ParticipantesTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+           
+           let participante =    self.participantes[indexPath.item]
+           
+           let storyboard = UIStoryboard(name: "Main", bundle: nil)
+           let controller = storyboard.instantiateViewController(identifier: "addParticipanteId") as! ParticipanteViewController
+           
+           controller.participanteSelecionado = [participante]
+           //self.present(controller, animated: true, completion: nil)
+           self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }

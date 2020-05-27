@@ -32,6 +32,7 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     let dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado", "Domingo"]
     
     let celulaObject = FormataCelula()
+     var celulaSelecionada : [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +42,42 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
         CriaTollBar()
         
         NotificationCenter.default.addObserver(self, selector: #selector(aumentarScroll), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        PreencheCamposAlteracaoCelula()
 
     }
+    
+    
+    func PreencheCamposAlteracaoCelula () {
+        if celulaSelecionada.count > 0 {
+
+            guard let nomeCelula = celulaSelecionada[0].value(forKey: "nome") else {return}
+            guard let nomeLider = celulaSelecionada[0].value(forKey: "lider") else {return}
+            guard let nomeAnf = celulaSelecionada[0].value(forKey: "anfitriao") else {return}
+            guard let dia = celulaSelecionada[0].value(forKey: "dia") else {return}
+            guard let horario = celulaSelecionada[0].value(forKey: "horario") else {return}
+            guard let cep = celulaSelecionada[0].value(forKey: "cep") else {return}
+            guard let logadouro = celulaSelecionada[0].value(forKey: "logradouro") else {return}
+            guard let numero = celulaSelecionada[0].value(forKey: "numero") else {return}
+            guard let bairro = celulaSelecionada[0].value(forKey: "bairro") else {return}
+            guard let municipio = celulaSelecionada[0].value(forKey: "municipio") else {return}
+            guard let uf = celulaSelecionada[0].value(forKey: "uf") else {return}
+            
+            textNomeCelula.text = nomeCelula as? String
+            textNomeLider.text = nomeLider as? String
+            textNomeAnfitriao.text = nomeAnf as? String
+            textDia.text = dia as? String
+            textHorario.text = horario as? String
+            textCep.text = cep as? String
+            textLogradouro.text = logadouro as? String
+            textNumero.text = numero as? String
+            textBairro.text = bairro as? String
+            textMunicipio.text = municipio as? String
+            textUF.text = uf as? String
+            
+        }
+    }
+    
     
     @objc func aumentarScroll (notification: Notification) {
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.scrollView.frame.height + 320)
@@ -61,13 +96,16 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBAction func adicionarCelula(_ sender: Any) {
         
-        guard let nome = self.textNomeCelula.text else {return}
-        
-        if celulaObject.verificaCelulaExiste(nome) == false {
-            addCelula()
-        }else {
-            exibeMensagemAlerta(titulo: nome, mensagem: "Este nome de celula já existe. Digite um nome diferente.")
-        }
+        if celulaSelecionada.count > 0 {
+            alteraCelula()
+        } else {
+            guard let nome = self.textNomeCelula.text else {return}
+            if celulaObject.verificaCelulaExiste(nome) == false {
+                addCelula()
+            }else {
+                    exibeMensagemAlerta(titulo: nome, mensagem: "Este nome de celula já existe. Digite um nome diferente.")
+                }
+            }
     }
     
     func CriaTollBar () {
@@ -110,6 +148,44 @@ class CadastroCelulaViewController: UIViewController, UIPickerViewDelegate, UIPi
     @objc func doneButtonAction() {
         self.textCep.resignFirstResponder()
         self.textNumero.resignFirstResponder()
+    }
+    
+    func alteraCelula () {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        //let context = appDelegate?.persistentContainer.viewContext
+        let context = appDelegate!.persistentContainer.viewContext
+        let entitidec = NSEntityDescription.entity(forEntityName: "CelulaDB", in: context)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CelulaDB")
+        request.entity = entitidec
+        let pred = NSPredicate(format: "nome =%@", textNomeCelula.text!)
+        request.predicate = pred
+        
+        do {
+            let result =  try context.fetch(request)
+            if result.count > 0 {
+                let manage = result[0] as! NSManagedObject
+    
+                manage.setValue(textNomeCelula.text!, forKey: "nome")
+                manage.setValue(textNomeLider.text, forKey: "lider")
+                manage.setValue(textNomeAnfitriao.text, forKey: "anfitriao")
+                manage.setValue(textDia.text,forKey: "dia")
+                manage.setValue(textHorario.text, forKey: "horario")
+                manage.setValue(textCep.text, forKey: "cep")
+                manage.setValue(textLogradouro.text, forKey: "logradouro")
+                manage.setValue(textNumero.text, forKey: "numero")
+                manage.setValue(textBairro.text, forKey: "bairro")
+                manage.setValue(textMunicipio.text, forKey: "municipio")
+                manage.setValue(textUF.text, forKey: "uf")
+
+             try context.save()
+             TelaPrincipal()
+            }
+        } catch  let erro1 as NSError{
+            print (erro1)
+        }
+        catch  {
+                print ("Erro")
+        }
     }
     
     
