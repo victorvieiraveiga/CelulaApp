@@ -18,7 +18,7 @@ class ConfigCell: UICollectionViewCell {
     
    
     
-    func configuraReuniao (reuniao: NSManagedObject , participantes: [NSManagedObject]) {
+    func configuraReuniao (_ reuniao: NSManagedObject , _ participantes: [NSManagedObject]) {
         
         guard let date =  reuniao.value(forKey: "data") else {return}
         //guard let obs = reuniao.value(forKey: "observacao") else {return}

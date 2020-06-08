@@ -16,7 +16,7 @@ class ConfigCellCelula: UICollectionViewCell {
        @IBOutlet weak var labelHorarioCelula: UILabel!
        @IBOutlet weak var labelEnderecoCelula: UILabel!
     
-    func configuraCelula (celula: NSManagedObject) {
+    func configuraCelula (_ celula: NSManagedObject) {
         
            guard let nome =  celula.value(forKey: "nome") else {return}
            guard let dia =  celula.value(forKey: "dia") else {return}

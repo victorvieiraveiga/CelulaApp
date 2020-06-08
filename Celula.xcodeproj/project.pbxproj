@@ -26,6 +26,7 @@
 		784011F1244BA0470053C7B5 /* BuscaCep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784011F0244BA0470053C7B5 /* BuscaCep.swift */; };
 		7840CE18242EF44A005F1AEC /* CepApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7840CE17242EF44A005F1AEC /* CepApi.swift */; };
 		7840CE1A242EF557005F1AEC /* ApiErro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7840CE19242EF557005F1AEC /* ApiErro.swift */; };
+		7841664B248056EB004DC2D5 /* ConfigCellParticipantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7841664A248056EB004DC2D5 /* ConfigCellParticipantes.swift */; };
 		7842E94024577DE900164789 /* ConfigCellCelula.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7842E93F24577DE900164789 /* ConfigCellCelula.swift */; };
 		784316F8242A59DE00654FE0 /* CelulaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784316F7242A59DE00654FE0 /* CelulaTableViewCell.swift */; };
 		784316FA242A5A0A00654FE0 /* Celula.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784316F9242A5A0A00654FE0 /* Celula.swift */; };
@@ -88,6 +89,7 @@
 		784011F0244BA0470053C7B5 /* BuscaCep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuscaCep.swift; sourceTree = "<group>"; };
 		7840CE17242EF44A005F1AEC /* CepApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CepApi.swift; sourceTree = "<group>"; };
 		7840CE19242EF557005F1AEC /* ApiErro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErro.swift; sourceTree = "<group>"; };
+		7841664A248056EB004DC2D5 /* ConfigCellParticipantes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCellParticipantes.swift; sourceTree = "<group>"; };
 		7842E93F24577DE900164789 /* ConfigCellCelula.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCellCelula.swift; sourceTree = "<group>"; };
 		784316F7242A59DE00654FE0 /* CelulaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaTableViewCell.swift; sourceTree = "<group>"; };
 		784316F9242A5A0A00654FE0 /* Celula.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Celula.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			children = (
 				7890D342244670EB0080EC18 /* ConfigCell.swift */,
 				7842E93F24577DE900164789 /* ConfigCellCelula.swift */,
+				7841664A248056EB004DC2D5 /* ConfigCellParticipantes.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				78B06AC624098A2100F40C58 /* Sources */,
 				78B06AC724098A2100F40C58 /* Frameworks */,
 				78B06AC824098A2100F40C58 /* Resources */,
+				C09CA45CD2EDC2B26E85EF3C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -474,6 +478,7 @@
 				78B06AE724098A2300F40C58 /* Sources */,
 				78B06AE824098A2300F40C58 /* Frameworks */,
 				78B06AE924098A2300F40C58 /* Resources */,
+				1501D7B7A002F4B7560AC2CB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -557,6 +562,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1501D7B7A002F4B7560AC2CB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Celula-CelulaUITests/Pods-Celula-CelulaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Celula-CelulaUITests/Pods-Celula-CelulaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Celula-CelulaUITests/Pods-Celula-CelulaUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A8AEDEE0283EC583C5C2E4BB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -577,6 +599,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C09CA45CD2EDC2B26E85EF3C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Celula/Pods-Celula-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Celula/Pods-Celula-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Celula/Pods-Celula-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C363FE474381EA843BC5BB94 /* [CP] Check Pods Manifest.lock */ = {
@@ -639,6 +678,7 @@
 				7890D343244670EB0080EC18 /* ConfigCell.swift in Sources */,
 				782FA6E6240A187D002E0483 /* AutenticaUsuario.swift in Sources */,
 				784316FF242B66B500654FE0 /* CelulaViewController.swift in Sources */,
+				7841664B248056EB004DC2D5 /* ConfigCellParticipantes.swift in Sources */,
 				783BA5062409AE060027630A /* LoginViewController.swift in Sources */,
 				783BA5082409AE1B0027630A /* CriarContaViewController.swift in Sources */,
 				78431705242C071800654FE0 /* Reuniao.swift in Sources */,

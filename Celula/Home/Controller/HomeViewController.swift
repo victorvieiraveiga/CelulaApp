@@ -16,11 +16,13 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var collectionReuniao: UICollectionView!
     @IBOutlet weak var contadorReuniao: UILabel!
  
+    @IBOutlet weak var collectionParticipantes: UICollectionView!
+    
     @IBOutlet weak var viewPrincipal: UIView!
     @IBOutlet weak var viewSemCelula: UIView!
     
     @IBOutlet weak var labelUltimasReunioes: UILabel!
-    
+    @IBOutlet weak var labelParticipantes: UILabel!
     
     @IBOutlet weak var viewReuniaoMini: UIView!
 
@@ -28,6 +30,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var labelContParticipantes: UILabel!
     @IBOutlet weak var viewParticipantesMini: UIView!
     @IBOutlet weak var labelContCelula: UILabel!
+    @IBOutlet weak var stackMiniaturas: UIStackView!
     
     var reuniaoList : [NSManagedObject] = []
     var participantesReuniao : [NSManagedObject] = []
@@ -44,19 +47,28 @@ class HomeViewController: UIViewController {
 
         collectionReuniao.delegate = self
         collectionReuniao.dataSource = self
+        
         collectionCelula.delegate = self
         collectionCelula.dataSource = self
+        
+        collectionParticipantes.dataSource = self
+        collectionParticipantes.delegate = self
 
 
         collectionReuniao.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
         collectionCelula.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        collectionParticipantes.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
         
         if let flowLayoutA = collectionCelula.collectionViewLayout as? UICollectionViewFlowLayout {
                flowLayoutA.scrollDirection = .horizontal
           }
          if let flowLayoutB = collectionReuniao.collectionViewLayout as? UICollectionViewFlowLayout {
-                     flowLayoutB.scrollDirection = .horizontal
+               flowLayoutB.scrollDirection = .horizontal
            }
+        
+        if let flowLayoutc = collectionParticipantes.collectionViewLayout as? UICollectionViewFlowLayout {
+               flowLayoutc.scrollDirection = .horizontal
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,6 +77,7 @@ class HomeViewController: UIViewController {
         contadorReuniao.text = String(reuniaoObject.numeroReunioes())
         collectionCelula.reloadData()
         collectionReuniao.reloadData()
+        collectionParticipantes.reloadData()
     }
     
     func inicio () {
@@ -77,10 +90,12 @@ class HomeViewController: UIViewController {
             self.reuniaoList = reuniaoObject.CarregaReuniao(numero_registros: 10)
             self.celulaList = celulaObject.CarregaCelula()
             self.participantesList = partObject.CarregaParticipante()
-            
-            exibeLabelsCelula()
-            exibeLabelsReuniao()
-            exibeLabelsParticipante()
+            labelUltimasReunioes.isHidden = true
+             labelParticipantes.isHidden = true
+            //exibeLabelsCelula()
+           // exibeLabelsReuniao()
+            //exibeLabelsParticipante()
+            exibeMiniaturas()
 
         }
         else {
@@ -116,12 +131,28 @@ class HomeViewController: UIViewController {
     
     func exibeLabelsParticipante() {
         if self.participantesList.count > 0 {
+             labelParticipantes.isHidden = false
             labelContParticipantes.isHidden = false
             viewParticipantesMini.isHidden = false
             labelContParticipantes.text = String(partObject.numeroParticipante())
         }else {
             labelContParticipantes.isHidden = true
             viewParticipantesMini.isHidden = true
+             labelParticipantes.isHidden = true
+        }
+    }
+    
+    func exibeMiniaturas () {
+        
+        if self.reuniaoList.count > 0 {
+            if self.participantesList.count > 0 {
+                if self.celulaList.count > 0 {
+                    stackMiniaturas.isHidden = false
+                    exibeLabelsParticipante()
+                    exibeLabelsCelula ()
+                    exibeLabelsReuniao ()
+                }
+            }
         }
     }
     
@@ -143,7 +174,12 @@ extension HomeViewController : UICollectionViewDelegateFlowLayout, UICollectionV
         if collectionView == self.collectionReuniao {
             return reuniaoList.count
         }else {
-            return celulaList.count
+                if collectionView == self.collectionCelula {
+                    return celulaList.count
+                }
+                else {
+                    return participantesList.count
+                 }
         }
     }
 
@@ -155,17 +191,28 @@ extension HomeViewController : UICollectionViewDelegateFlowLayout, UICollectionV
             let cellB = collectionView.dequeueReusableCell(withReuseIdentifier: "cellCelula", for: indexPath) as! ConfigCellCelula
             
             let celula = celulaList[indexPath.item]
-            cellB.configuraCelula(celula: celula)
+            cellB.configuraCelula(celula)
             return cellB
         } else {
-            let cellA = collectionReuniao.dequeueReusableCell(withReuseIdentifier: "reuniaoCell", for: indexPath) as! ConfigCell
+            if collectionView == self.collectionReuniao {
+                let cellA = collectionReuniao.dequeueReusableCell(withReuseIdentifier: "reuniaoCell", for: indexPath) as! ConfigCell
+                        
+                        let reuniao = reuniaoList[indexPath.item]
+                        let id = reuniao.value(forKey: "id") as! String
+                        self.participantesReuniao =  partObject.CarregaParticipantesReuniao(idReuniao: id, nomeCelula: "Celula Victor")
+                        cellA.configuraReuniao(reuniao,  self.participantesReuniao )
+                        
+                        return cellA
+            }else {
+                let cellC = collectionParticipantes.dequeueReusableCell(withReuseIdentifier: "participantesCell", for: indexPath) as! ConfigCellParticipantes
+                                   
+                let participante = self.participantesList [indexPath.item]
+                cellC.configuraParticipanted(participante)
+                return cellC
+            }
+        
             
-            let reuniao = reuniaoList[indexPath.item]
-            let id = reuniao.value(forKey: "id") as! String
-            self.participantesReuniao =  partObject.CarregaParticipantesReuniao(idReuniao: id, nomeCelula: "Celula Victor")
-            cellA.configuraReuniao(reuniao: reuniao, participantes:  self.participantesReuniao )
-            
-            return cellA
+        
         }
     }
     
