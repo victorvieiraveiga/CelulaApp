@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import  GoogleMobileAds
 
 class CelulaViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
@@ -17,6 +18,14 @@ class CelulaViewController: UIViewController, UITableViewDataSource,UITableViewD
 
     var celula : [NSManagedObject] = []
     var celulaObject = FormataCelula()
+    
+//    private let banner : GADBannerView = {
+//        let banner = GADBannerView()
+//        banner.adUnitID = "ca-app-pub-6593854542748346/5020695807"
+//        banner.load(GADRequest())
+//        banner.backgroundColor = .secondarySystemBackground
+//        return banner
+//    } ()
    
     
     override func viewDidLoad() {
@@ -25,12 +34,21 @@ class CelulaViewController: UIViewController, UITableViewDataSource,UITableViewD
         self.tableview.delegate = self
         self.tableview.dataSource = self
         self.celula = celulaObject.CarregaCelula()
+        
+//        banner.rootViewController = self
+//        view.addSubview(banner)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
          self.celula = celulaObject.CarregaCelula()
          tableview.reloadData()
     }
+    
+//    override func viewDidLayoutSubviews() {
+//         super.viewDidLayoutSubviews()
+//        banner.frame = CGRect(x: 0, y: view.frame.size.height-50, width: view.frame.size.width, height: 50).integral
+//     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return celula.count

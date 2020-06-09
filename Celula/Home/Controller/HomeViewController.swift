@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
 class HomeViewController: UIViewController {
 
@@ -40,6 +41,13 @@ class HomeViewController: UIViewController {
     let celulaObject = FormataCelula()
     let partObject = FormataParticipantes()
     
+    private let banner : GADBannerView = {
+        let banner = GADBannerView()
+        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716" //"ca-app-pub-6593854542748346/5020695807"
+        banner.load(GADRequest())
+        banner.backgroundColor = .secondarySystemBackground
+        return banner
+    } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +77,10 @@ class HomeViewController: UIViewController {
         if let flowLayoutc = collectionParticipantes.collectionViewLayout as? UICollectionViewFlowLayout {
                flowLayoutc.scrollDirection = .horizontal
         }
+        
+        banner.rootViewController = self
+        //view.addSubview(banner)
+        viewPrincipal.addSubview(banner)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,6 +90,11 @@ class HomeViewController: UIViewController {
         collectionCelula.reloadData()
         collectionReuniao.reloadData()
         collectionParticipantes.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        banner.frame = CGRect(x: 0, y: viewPrincipal.frame.size.height-50, width: viewPrincipal.frame.size.width, height: 50).integral
     }
     
     func inicio () {
