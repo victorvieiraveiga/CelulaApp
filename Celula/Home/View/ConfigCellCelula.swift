@@ -12,9 +12,10 @@ import CoreData
 class ConfigCellCelula: UICollectionViewCell {
     
     @IBOutlet weak var labelNomeCelula: UILabel!
-       @IBOutlet weak var labelDiaCelula: UILabel!
-       @IBOutlet weak var labelHorarioCelula: UILabel!
-       @IBOutlet weak var labelEnderecoCelula: UILabel!
+    @IBOutlet weak var labelDiaCelula: UILabel!
+    @IBOutlet weak var labelHorarioCelula: UILabel!
+    @IBOutlet weak var labelEnderecoCelula: UILabel!
+    
     
     func configuraCelula (_ celula: NSManagedObject) {
         

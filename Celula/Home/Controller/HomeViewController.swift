@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var viewParticipantesMini: UIView!
     @IBOutlet weak var labelContCelula: UILabel!
     @IBOutlet weak var stackMiniaturas: UIStackView!
+    @IBOutlet weak var scrollPrincipal: UIScrollView!
     
     var reuniaoList : [NSManagedObject] = []
     var participantesReuniao : [NSManagedObject] = []
@@ -43,7 +44,7 @@ class HomeViewController: UIViewController {
     
     private let banner : GADBannerView = {
         let banner = GADBannerView()
-        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716" //"ca-app-pub-6593854542748346/5020695807"
+        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716" //teste //"ca-app-pub-6593854542748346/5020695807" //producao
         banner.load(GADRequest())
         banner.backgroundColor = .secondarySystemBackground
         return banner
@@ -52,41 +53,44 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         inicio()
-
-        collectionReuniao.delegate = self
-        collectionReuniao.dataSource = self
-        
-        collectionCelula.delegate = self
-        collectionCelula.dataSource = self
-        
-        collectionParticipantes.dataSource = self
-        collectionParticipantes.delegate = self
-
-
-        collectionReuniao.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        collectionCelula.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        collectionParticipantes.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        
-        if let flowLayoutA = collectionCelula.collectionViewLayout as? UICollectionViewFlowLayout {
-               flowLayoutA.scrollDirection = .horizontal
-          }
-         if let flowLayoutB = collectionReuniao.collectionViewLayout as? UICollectionViewFlowLayout {
-               flowLayoutB.scrollDirection = .horizontal
-           }
-        
-        if let flowLayoutc = collectionParticipantes.collectionViewLayout as? UICollectionViewFlowLayout {
-               flowLayoutc.scrollDirection = .horizontal
-        }
+        configuraCollectionView()
+//        collectionReuniao.delegate = self
+//        collectionReuniao.dataSource = self
+//
+//        collectionCelula.delegate = self
+//        collectionCelula.dataSource = self
+//
+//        collectionParticipantes.dataSource = self
+//        collectionParticipantes.delegate = self
+//
+//
+//        collectionReuniao.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+//        collectionCelula.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+//        collectionParticipantes.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+//
+//        if let flowLayoutA = collectionCelula.collectionViewLayout as? UICollectionViewFlowLayout {
+//               flowLayoutA.scrollDirection = .horizontal
+//          }
+//         if let flowLayoutB = collectionReuniao.collectionViewLayout as? UICollectionViewFlowLayout {
+//               flowLayoutB.scrollDirection = .horizontal
+//           }
+//
+//        if let flowLayoutc = collectionParticipantes.collectionViewLayout as? UICollectionViewFlowLayout {
+//               flowLayoutc.scrollDirection = .horizontal
+//        }
         
         banner.rootViewController = self
         //view.addSubview(banner)
         viewPrincipal.addSubview(banner)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(aumentarScroll), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         inicio()
 
-        contadorReuniao.text = String(reuniaoObject.numeroReunioes())
+        //contadorReuniao.text = String(reuniaoObject.numeroReunioes())
         collectionCelula.reloadData()
         collectionReuniao.reloadData()
         collectionParticipantes.reloadData()
@@ -107,12 +111,12 @@ class HomeViewController: UIViewController {
             self.reuniaoList = reuniaoObject.CarregaReuniao(numero_registros: 10)
             self.celulaList = celulaObject.CarregaCelula()
             self.participantesList = partObject.CarregaParticipante()
-            labelUltimasReunioes.isHidden = true
-             labelParticipantes.isHidden = true
+            //labelUltimasReunioes.isHidden = true
+            // labelParticipantes.isHidden = true
             //exibeLabelsCelula()
            // exibeLabelsReuniao()
             //exibeLabelsParticipante()
-            exibeMiniaturas()
+            //exibeMiniaturas()
 
         }
         else {
@@ -121,10 +125,62 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func configuraCollectionView(){
+        collectionReuniao.delegate = self
+        collectionReuniao.dataSource = self
+        
+        collectionCelula.delegate = self
+        collectionCelula.dataSource = self
+        
+        collectionParticipantes.dataSource = self
+        collectionParticipantes.delegate = self
+
+
+        //collectionReuniao.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        //collectionCelula.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        //collectionParticipantes.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        
+//        if let flowLayoutA = collectionCelula.collectionViewLayout as? UICollectionViewFlowLayout {
+//               flowLayoutA.scrollDirection = .horizontal
+//          }
+//         if let flowLayoutB = collectionReuniao.collectionViewLayout as? UICollectionViewFlowLayout {
+//               flowLayoutB.scrollDirection = .horizontal
+//           }
+//
+//        if let flowLayoutc = collectionParticipantes.collectionViewLayout as? UICollectionViewFlowLayout {
+//               flowLayoutc.scrollDirection = .horizontal
+//        }
+        
+//        collectionReuniao.layer.borderWidth = 1
+//        collectionReuniao.layer.borderColor = UIColor.systemGray3.cgColor
+//        collectionReuniao.layer.cornerRadius = 10
+//        collectionReuniao.layer.masksToBounds = true
+//        
+//        collectionCelula.layer.borderWidth = 1
+//        collectionCelula.layer.borderColor = UIColor.systemGray3.cgColor
+//        collectionCelula.layer.cornerRadius = 10
+//        collectionCelula.layer.masksToBounds = true
+//
+//        collectionParticipantes.layer.borderWidth = 1
+//        collectionParticipantes.layer.borderColor = UIColor.systemGray3.cgColor
+//        collectionParticipantes.layer.cornerRadius = 10
+//        collectionParticipantes.layer.masksToBounds = true
+//
+//        // set the shadow properties
+//        collectionReuniao.layer.shadowColor = UIColor.black.cgColor
+//        collectionReuniao.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+//        collectionReuniao.layer.shadowOpacity = 0.2
+//        collectionReuniao.layer.shadowRadius = 4.0
+    }
+    
+    @objc func aumentarScroll (notification: Notification) {
+        self.scrollPrincipal.contentSize = CGSize(width: self.scrollPrincipal.frame.width, height: self.scrollPrincipal.frame.height + 320)
+    }
+    
     func exibeLabelsReuniao () {
         if self.reuniaoList.count > 0 {
             contadorReuniao.text = String(reuniaoObject.numeroReunioes())
-            labelUltimasReunioes.isHidden = false
+            //labelUltimasReunioes.isHidden = false
             viewReuniaoMini.isHidden = false
             contadorReuniao.isHidden = false
         }else {
@@ -148,7 +204,7 @@ class HomeViewController: UIViewController {
     
     func exibeLabelsParticipante() {
         if self.participantesList.count > 0 {
-             labelParticipantes.isHidden = false
+            // labelParticipantes.isHidden = false
             labelContParticipantes.isHidden = false
             viewParticipantesMini.isHidden = false
             labelContParticipantes.text = String(partObject.numeroParticipante())
@@ -159,19 +215,19 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func exibeMiniaturas () {
-        
-        if self.reuniaoList.count > 0 {
-            if self.participantesList.count > 0 {
-                if self.celulaList.count > 0 {
-                    stackMiniaturas.isHidden = false
-                    exibeLabelsParticipante()
-                    exibeLabelsCelula ()
-                    exibeLabelsReuniao ()
-                }
-            }
-        }
-    }
+//    func exibeMiniaturas () {
+//
+//        if self.reuniaoList.count > 0 {
+//            if self.participantesList.count > 0 {
+//                if self.celulaList.count > 0 {
+//                    stackMiniaturas.isHidden = false
+//                    exibeLabelsParticipante()
+//                    exibeLabelsCelula ()
+//                    exibeLabelsReuniao ()
+//                }
+//            }
+//        }
+//    }
     
     
     

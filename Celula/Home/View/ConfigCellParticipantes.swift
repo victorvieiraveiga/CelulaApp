@@ -13,9 +13,9 @@ class ConfigCellParticipantes: UICollectionViewCell {
     
     @IBOutlet weak var imageFoto: UIImageView!
     @IBOutlet weak var labelNome: UILabel!
-    @IBOutlet weak var labelEmail: UILabel!
-    @IBOutlet weak var labelTelefone: UILabel!
-    @IBOutlet weak var labelIdade: UILabel!
+   // @IBOutlet weak var labelEmail: UILabel!
+   // @IBOutlet weak var labelTelefone: UILabel!
+    //@IBOutlet weak var labelIdade: UILabel!
     
     
     
@@ -24,17 +24,17 @@ class ConfigCellParticipantes: UICollectionViewCell {
     func configuraParticipanted (_ participante: NSManagedObject) {
         
            guard let nome =  participante.value(forKey: "nome") else {return}
-           guard let email =  participante.value(forKey: "email") else {return}
-           guard let telefone =  participante.value(forKey: "telefone") else {return}
-           guard let idade =  participante.value(forKey: "data_nascimento") else {return}
+           //guard let email =  participante.value(forKey: "email") else {return}
+           //guard let telefone =  participante.value(forKey: "telefone") else {return}
+          // guard let idade =  participante.value(forKey: "data_nascimento") else {return}
            guard let foto =  participante.value(forKey: "foto") else {return}
            
            
            
            labelNome.text = nome as? String
-           labelEmail.text = "Email: \(email)"
-           labelTelefone.text = "Telefone: \(telefone)"
-           labelIdade.text = "Data de Nascimento: \(idade)"
+           //labelEmail.text = "Email: \(email)"
+           //labelTelefone.text = "Telefone: \(telefone)"
+           //labelIdade.text = "Data de Nascimento: \(idade)"
            imageFoto.image = UIImage(data: foto as! Data)
            
            
